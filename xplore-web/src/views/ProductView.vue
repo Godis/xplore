@@ -33,6 +33,11 @@
               <el-input @change="onUpdateByCid(scope.row.cid)" v-model="scope.row.size" type="number" min="4" max="50" step="0.5" style="width: 40%"></el-input>
             </template>             
           </el-table-column>
+           <el-table-column label="Size">
+            <template slot-scope="scope">
+
+            </template>
+          </el-table-column>
           <el-table-column label="Actions" width="120">
             <template slot-scope="scope">
               <el-button @click="onCloneByCid(scope.row.cid)" type="text" size="small">Clone</el-button>
@@ -60,7 +65,7 @@ export default Vue.extend({
         colours: ['Aquamarine', 'Blue', 'Brown', 'Black', 'Cyan', 'Green', 'Grey', 'Indigo', 'Lime', 'Magenta',
          'Maroon', 'Navy', 'Olive', 'Orange', 'Pink', 'Purple', 'Red', 'Silver', 'Tan', 'Teal', 'Turquoise', 'Violet',
          'White', 'Yellow'],
-        regions: ['UK', 'US', 'EU']
+        regions: ['UK', 'US', 'EU'],
     };
   },
   computed: {
@@ -70,13 +75,13 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions([
-      'fetchProducts', 'updateProductByCid', 'cloneProductByCid', 'deleteProductByCid'
+      'fetchProducts', 'updateProductByCid', 'cloneProductByCid', 'deleteProductByCid',
     ]),
     create() {
       // this.$router.push('/products/create');
     },
-    onUpdateByCid(cid: String) {
-      this.updateProductByCid(cid)
+    onUpdateByCid(cid: string) {
+      this.updateProductByCid(cid);
     },
     async onCloneByCid(cid: string) {
       await this.cloneProductByCid(cid);

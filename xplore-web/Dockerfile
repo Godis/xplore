@@ -1,6 +1,9 @@
-FROM node:10.16.0
-RUN npm install -g serve
-COPY dist/ /app/dist
-ENTRYPOINT ["serve", "-l", "8000", "/app/dist"]
+FROM node:13.12.0
+COPY . /app
+WORKDIR /app
+#RUN npm rebuild node-sass
+RUN yarn
+RUN yarn build
+ENTRYPOINT ["node", "server.js"]
 EXPOSE 8000
 

@@ -1,5 +1,22 @@
 import cuid from 'cuid';
 
+export function asStringObject(obj: {}) {
+
+    let stringyObject: any = {};
+
+    let entries: [string, any][] = Object.entries(obj);
+
+    entries.forEach(([key, val]) => {
+      if (key === 'size') {
+        stringyObject[key] = val.toString();
+      } else {
+        stringyObject[key] = val;
+      }
+    });
+
+    return stringyObject;
+}
+
 export const initProduct = () => ({
   cid: cuid(),
   brand: '',
@@ -9,6 +26,17 @@ export const initProduct = () => ({
   size: '',
   description: {},
 });
+
+export interface Product {
+  id: string;
+  cid: string;
+  category: string;
+  brand: string;
+  colour: string;
+  region: string;
+  size: number;
+  description: {};
+}
 
 export interface RootState {
   product: {

@@ -1,17 +1,17 @@
 import { ActionTree } from 'vuex';
 import axios from 'axios';
 import config from '../config';
-import { RootState, initProduct } from './state';
+import { RootState, Product, initProduct, asStringObject } from './state';
 
 export const actions: ActionTree<RootState, any> = {
   async fetchProducts({ commit }) {
 
     const res = await axios.get(`${config.apiBaseUrl}/products`);
 
-    const products = res.data.map(product => {
+    const products = res.data.map((p: Product) => {
       return {
         ...initProduct(),
-        ...product,
+        ...p,
       };
     });
 
@@ -19,45 +19,27 @@ export const actions: ActionTree<RootState, any> = {
   },
   async updateProductByCid({ commit, state }, cid) {
 
-    let product = state.product.list.find((product) => product.cid === cid);
+    let product = state.product.list.find((p) => p.cid === cid);
 
-    let stringyProduct: any = {}
-    Object.entries(product).forEach(([key, val]) => {
-      if (key == 'size') {
-        stringyProduct[key] = val.toString()
-      } else {
-        stringyProduct[key] = val
-      }
-    });
+    let stringyProduct: any = asStringObject(product);
 
-    const res = await axios.put(`${config.apiBaseUrl}/products/${product.id}`, stringyProduct);    
-
-    console.log(res)
+    const res = await axios.put(`${config.apiBaseUrl}/products/${product.id}`, stringyProduct);
   },
   async cloneProductByCid({ commit, state }, cid) {
-    
-    let product = state.product.list.find((product) => product.cid === cid);
 
-    let stringyProduct: any = {}
-    Object.entries(product).forEach(([key, val]) => {
-      if (key == 'size') {
-        stringyProduct[key] = val.toString()
-      } else {
-        stringyProduct[key] = val
-      }
-    });
-    
+    let product = state.product.list.find((p) => p.cid === cid);
+
+    let stringyProduct: any = asStringObject(product);
+
     const res = await axios.post(`${config.apiBaseUrl}/products`, stringyProduct);
-    
-    console.log(res)
   },
   async deleteProductByCid({ commit, state }, cid) {
 
-    let product = state.product.list.find((product) => product.cid === cid);
+    let product = state.product.list.find((p) => p.cid === cid);
 
     const res = await axios.delete(`${config.apiBaseUrl}/products/${product.id}`);
     
-    commit('deleteProductSuccess', cid)
+    commit('deleteProductSuccess', cid);
   },
 };
 

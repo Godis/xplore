@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  xplore-mongo:
+    build: ./xplore-mongo
+    image: abimbolaesuruoso/xplore-mongo
+    container_name: xplore-mongo
+    ports:
+      - "27017:27017"
+  xplore-api:
+    build: ./xplore-api
+    image: abimbolaesuruoso/xplore-api
+    container_name: xplore-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - xplore-mongo
+  xplore-web:
+    build: ./xplore-web
+    image: abimbolaesuruoso/xplore-web
+    container_name: xplore-web
+    ports:
+      - "8000:8000"
+  xplore-gateway:
+    build: ./xplore-gateway
+    image: abimbolaesuruoso/xplore-gateway
+    container_name: xplore-gateway
+    ports:
+      - "80:80"
+    depends_on:
+      - xplore-api
+      - xplore-web
