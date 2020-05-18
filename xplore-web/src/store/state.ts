@@ -2,9 +2,9 @@ import cuid from 'cuid';
 
 export function asStringObject(obj: {}) {
 
-    let stringyObject: any = {};
+    const stringyObject: any = {};
 
-    let entries: [string, any][] = Object.entries(obj);
+    const entries: Array<[string, any]> = Object.entries(obj);
 
     entries.forEach(([key, val]) => {
       if (key === 'size') {

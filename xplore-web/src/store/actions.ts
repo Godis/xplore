@@ -17,29 +17,41 @@ export const actions: ActionTree<RootState, any> = {
 
     commit('fetchProductsSuccess', products);
   },
-  async updateProductByCid({ commit, state }, cid) {
+  async updateProductGenericallyByCid({ commit, state }, { cid, field, newValue }) {
 
-    let product = state.product.list.find((p) => p.cid === cid);
+    const product = state.product.list.find((p) => p.cid === cid);
 
-    let stringyProduct: any = asStringObject(product);
+    product[field] = newValue;
+
+    const stringyProduct: any = asStringObject(product);
 
     const res = await axios.put(`${config.apiBaseUrl}/products/${product.id}`, stringyProduct);
+
+    commit('updateProductSuccess', {cid, payload: res.data});
   },
   async cloneProductByCid({ commit, state }, cid) {
 
-    let product = state.product.list.find((p) => p.cid === cid);
+    const product = state.product.list.find((p) => p.cid === cid);
 
-    let stringyProduct: any = asStringObject(product);
+    const stringyProduct: any = asStringObject(product);
 
     const res = await axios.post(`${config.apiBaseUrl}/products`, stringyProduct);
+
+    commit('cloneProductSuccess', res.data);
   },
   async deleteProductByCid({ commit, state }, cid) {
 
-    let product = state.product.list.find((p) => p.cid === cid);
+    const product = state.product.list.find((p) => p.cid === cid);
 
     const res = await axios.delete(`${config.apiBaseUrl}/products/${product.id}`);
-    
+
     commit('deleteProductSuccess', cid);
+  },
+  addDescriptionByCid({ commit, state }, cid) {
+
+    const product = state.product.list.find((p) => p.cid === cid);
+
+    product.description.push('');
   },
 };
 

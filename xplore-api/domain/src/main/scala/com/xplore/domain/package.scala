@@ -18,7 +18,7 @@ package object domain {
     val all: Seq[Region] = Seq(UK, US, EU)
   }
 
-  case class Product(id: UUID, category: Category, brand: Brand, colour: Colour, size: Size, description: Map[String, String])
+  case class Product(id: UUID, category: Category, brand: Brand, colour: Colour, size: Size, description: Seq[String])
 
   case class Size(region: Region, value: Double)
 }

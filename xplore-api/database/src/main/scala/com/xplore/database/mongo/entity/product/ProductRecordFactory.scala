@@ -8,15 +8,15 @@ import org.bson.types.ObjectId
 
 class ProductRecordFactory(generator: IdGenerator[ObjectId]) extends RecordFactory[Product, ProductRecord] {
 
-  override def create(p: Product): ProductRecord = ProductRecord(
+  override def create(entity: Product): ProductRecord = ProductRecord(
     generator.newId,
-    p.id,
-    p.category.underlying,
-    p.brand.underlying,
-    p.colour.underlying,
-    p.size.region.underlying,
-    p.size.value,
-    p.description
+    entity.id,
+    entity.category.underlying,
+    entity.brand.underlying,
+    entity.colour.underlying,
+    entity.size.region.underlying,
+    entity.size.value,
+    entity.description
   )
 }
 
